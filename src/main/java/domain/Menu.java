@@ -13,8 +13,18 @@ public class Menu {
         this.price = price;
     }
 
+    public int getNumber() {
+        return this.number;
+    }
+
     @Override
     public String toString() {
         return category + " " + number + " - " + name + " : " + price + "원";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Menu menu = (Menu) obj;
+        return this.name.equals(menu.name);
     }
 }

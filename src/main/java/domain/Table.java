@@ -11,4 +11,10 @@ public class Table {
     public String toString() {
         return Integer.toString(number);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Table table = (Table) obj;
+        return this.number == table.number;
+    }
 }

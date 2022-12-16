@@ -1,21 +1,27 @@
-import domain.Menu;
-import domain.MenuRepository;
-import domain.Table;
-import domain.TableRepository;
+import domain.*;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class Application {
-    // TODO 구현 진행
     public static void main(String[] args) {
-        final List<Table> tables = TableRepository.tables();
-        OutputView.printTables(tables);
+        OutputView.printMain(MainFunction.print());
+        MainFunction mainFunction = InputView.chooseMainFunction();
+        if (mainFunction == MainFunction.REGISTER_ORDER) orderMenu();
+        if (mainFunction != MainFunction.QUIT) main(args);
 
-        final int tableNumber = InputView.inputTableNumber();
+    }
 
-        final List<Menu> menus = MenuRepository.menus();
-        OutputView.printMenus(menus);
+    private static void orderMenu() {
+        OutputView.printTables(TableRepository.tables());
+        Table table = InputView.inputTableNumber();
+
+        Order order = OrderRepository.getOrder(table);
+        if (order == null) order = new Order(table);
+
+        OutputView.printMenus(MenuRepository.menus());
+        InputView.inputGetOrder(order);
+
+        OrderRepository.add(order);
+        // System.out.println("주문 목록 크기"+OrderRepository.orders().size());
     }
 }

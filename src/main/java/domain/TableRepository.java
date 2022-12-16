@@ -19,4 +19,11 @@ public class TableRepository {
     public static List<Table> tables() {
         return Collections.unmodifiableList(tables);
     }
+
+    public static Table getTable(String userInputTable) {
+        for (Table table : tables){
+            if(table.toString().equals(userInputTable)) return table;
+        }
+        throw new IllegalArgumentException("[ERROR] 입력하신 테이블이 존재하지 않습니다.");
+    }
 }

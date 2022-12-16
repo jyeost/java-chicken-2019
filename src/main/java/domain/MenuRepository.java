@@ -21,4 +21,16 @@ public class MenuRepository {
     public static List<Menu> menus() {
         return Collections.unmodifiableList(menus);
     }
+
+    public static Menu getMenu(String userInputMenuNumber) {
+        try {
+            Integer.parseInt(userInputMenuNumber);
+        } catch (NumberFormatException e){
+            throw new IllegalArgumentException("[ERROR] 메뉴는 숫자로 입력해주세요.");
+        }
+        for (Menu menu : menus){
+            if(menu.getNumber()== Integer.parseInt(userInputMenuNumber) ) return menu;
+        }
+        throw new IllegalArgumentException("[ERROR] 입력하신 메뉴가 존재하지 않습니다.");
+    }
 }

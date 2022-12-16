@@ -1,6 +1,7 @@
 package view;
 
 import domain.Menu;
+import domain.OrderRepository;
 import domain.Table;
 
 import java.util.List;
@@ -9,13 +10,14 @@ public class OutputView {
     private static final String TOP_LINE = "┌ ─ ┐";
     private static final String TABLE_FORMAT = "| %s |";
     private static final String BOTTOM_LINE = "└ ─ ┘";
+    private static final String HAVING_ORDER_BOTTOM_LINE = "└ # ┘";
 
     public static void printTables(final List<Table> tables) {
-        System.out.println("## 테이블 목록");
+        System.out.println(System.lineSeparator() + "## 테이블 목록");
         final int size = tables.size();
         printLine(TOP_LINE, size);
         printTableNumbers(tables);
-        printLine(BOTTOM_LINE, size);
+        printBottomLine(tables, BOTTOM_LINE, HAVING_ORDER_BOTTOM_LINE);
     }
 
     public static void printMenus(final List<Menu> menus) {
@@ -36,5 +38,17 @@ public class OutputView {
             System.out.printf(TABLE_FORMAT, table);
         }
         System.out.println();
+    }
+
+    private static void printBottomLine(List<Table> tables, String bottomLine, String havingOrderBottomLine) {
+        for (final Table table : tables) {
+            if(OrderRepository.isOrderedTable(table)) System.out.print(havingOrderBottomLine);
+            if(!OrderRepository.isOrderedTable(table)) System.out.print(bottomLine);
+        }
+        System.out.println();
+    }
+
+    public static void printMain(String print) {
+        System.out.println(print);
     }
 }
